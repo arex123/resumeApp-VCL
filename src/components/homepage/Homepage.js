@@ -13,6 +13,12 @@ const Homepage = () =>{
 
     useEffect(()=>{
         console.log("19")
+
+        let login = localStorage.getItem('staff')
+        if(!login){
+          navigate('/login')
+        }
+
         
         try{
             console.log("22")
@@ -38,6 +44,7 @@ const Homepage = () =>{
     },[])
 
     const loginpage = ()=>{
+        localStorage.removeItem('staff')
         navigate('/login')
     }
 
@@ -107,6 +114,7 @@ const Homepage = () =>{
     return (
         <div className="App">
 
+<h1>List of Students</h1>
         
         <table>
           <tr>

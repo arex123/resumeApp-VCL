@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './studentform.css'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
@@ -63,8 +63,19 @@ const Student_form = () => {
     }
 
     const loginpage = ()=>{
+        localStorage.removeItem('student')
         navigate('/login')
     }
+
+
+    useEffect(()=>{
+        let login = localStorage.getItem('student')
+        if(!login){
+            navigate('/login')
+        }
+    })
+
+
     return (
         <div className="register">
             <h1>Student Details</h1>
@@ -73,7 +84,7 @@ const Student_form = () => {
             <input type="number" placeholder="Enter Phone" name="phone" value={user.phone} onChange={handleChange} ></input>
             <input type="file" accept="application/pdf" placeholder="Upload Resume" name="resume" value={filename} onChange={fileUpload} ></input>
             <div className="button" onClick={submitForm}>Submit</div>
-            <div className="login_button" onClick={loginpage}>Login</div>
+            <div className="login_button" onClick={loginpage}>Logout</div>
         </div>
     )
 }

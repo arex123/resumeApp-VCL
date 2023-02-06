@@ -26,9 +26,14 @@ const Login = ()=>{
     let result = await axios.post('http://localhost:5000/login',user)
       if(result.data.success){
 
-        if(user.type=="0"){   
+        if(user.type=="0"){ 
+
+          localStorage.setItem('staff',true)
+          
           navigate('/')
         }else{
+
+          localStorage.setItem('student',true)
           navigate('/student_form')
         }
       }else{
@@ -42,7 +47,7 @@ const Login = ()=>{
     <div className="login">     
       <h1>Login</h1>
       <label>Type:</label>
-      <select name="type" id="selecttag" onClick={handleChange}>
+      <select name="type" id="selecttag" className="typeclass" onClick={handleChange}>
         <option value='0' selected>Staff</option>
         <option value='1'>Student</option>
       </select>
