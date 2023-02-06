@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import './Register.css'
+import './studentform.css'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Student_form = () => {
 
     const navigate = useNavigate()
     const [user, setUser] = useState({
@@ -77,4 +77,4 @@ const Register = () => {
         </div>
     )
 }
-export default Register
+export default Student_form

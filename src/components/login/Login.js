@@ -25,12 +25,16 @@ const Login = ()=>{
   const login =async()=>{
     let result = await axios.post('http://localhost:5000/login',user)
       if(result.data.success){
+
         if(user.type=="0"){   
           navigate('/')
         }else{
           navigate('/student_form')
         }
-      }
+      }else{
+    
+    alert("Wrong Creadential")
+  }
    
   }
 

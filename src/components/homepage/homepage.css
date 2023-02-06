@@ -21,12 +21,12 @@
   }
 
   
-.login_button{
+.login_button,.view{
     margin-top: 10px;
     color: #1877f2;
 }
 
-.login_button:hover{
+.login_button,.view:hover{
     cursor: pointer;
     color: black;
 }

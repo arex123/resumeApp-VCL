@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import moment from 'moment'
 import 'moment-timezone';
-
+import FileDownload from 'js-file-download'
 const Homepage = () =>{
 
     const [data,setData] = useState([])
@@ -42,14 +42,66 @@ const Homepage = () =>{
     }
 
     const viewResume= async (e)=>{
-        console.log("path: "+e.target.val)
-        // var url = "http://localhost:5000"+path+".pdf";
-        // let result = await axios.get(url)
+        // console.log("path: "+e.target.val)
+
+        var path =e.target.dataset.value
+        console.log("name: "+path)
+
+
+
+      //   fetch("http://localhost:5000/data/"+path+".pdf").then(response => {
+      //     response.blob().then(blob => {
+      //         // Creating new object of PDF file
+      //         console.log("JSON.stringify(blob): "+JSON.stringify(blob))
+      //         const fileURL = window.URL.createObjectURL(blob);
+      //         // Setting various property values
+      //         console.log("fileURL: "+fileURL)
+      //         let alink = document.createElement('a');
+      //         alink.href = fileURL;
+      //         alink.download = path+'.pdf';
+      //         alink.click();
+      //     })
+      // })
+
+        console.log("66")
+        // var url = "http://localhost:5000/data";
+
+        let result = await axios({
+          url:"http://localhost:5000/data",
+          method:"GET",
+          params:{path:path},
+          responseType:"blob"
+        })
+
+        console.log("resu: "+JSON.stringify(result))
+        if(result.status==200){
+          FileDownload(result.data,'resume.pdf')
+        }else{
+          alert("No Resume Found")
+        }
+
+
+
+
+        console.log("68")
+        // let result = await fetch(url,path)
+        // const formdata = new FormData()
+        // formdata.append("path",path)
+        // let result = await axios.post(url,formdata)
+        // // let result = await axios.get(url, {responseType: 'arraybuffer'})
+        // console.log("54")
         // if(result){
+        //   console.log("opening file"+JSON.stringify(result))
+        //   const file = new Blob([result.data], {
+        //     type: "application/pdf"
+        //   });
         //     window.open(URL.createObjectURL(result.data));
+        //   // window.open(result.data)
         // }else{
         //     console.log("something went wrong while downloading the file")
         // }
+        // console.log("64")
+
     }
 
     return (
@@ -72,7 +124,8 @@ const Homepage = () =>{
                 <td>{val.phone}</td>
                 <td>{moment(val.created_at).tz("Asia/Kolkata").format("DD MMM 'YY")}  {moment(val.created_at).tz("Asia/Kolkata").format("hh:mm a")}</td>
                 {/* <td>{val.updated_at}</td> */}
-                <td onClick={viewResume}>view</td>
+                <td className="view" name="resume" data-value={val.resume} onClick={viewResume}>view</td>
+                {/* <a href={"http://localhost:5000/data/"+val.resume+".pdf"}>view</a> */}
               </tr>
             )
           })}
